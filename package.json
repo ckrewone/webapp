@@ -1,0 +1,22 @@
+{
+  "name": "webapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/lwolodkiewicz/webapp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://bitbucket.org/lwolodkiewicz/webapp/issues"
+  },
+  "homepage": "https://bitbucket.org/lwolodkiewicz/webapp#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
