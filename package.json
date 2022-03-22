@@ -17,6 +17,7 @@
   },
   "homepage": "https://bitbucket.org/lwolodkiewicz/webapp#readme",
   "dependencies": {
+    "body-parser": "^1.19.2",
     "cors": "^2.8.5",
     "dialer": "https://bitbucket.org/pdombrowski/dialer.git",
     "express": "^4.17.3"
