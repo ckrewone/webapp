@@ -23,8 +23,6 @@ app.get('/call/:status', async (req, res) => {
     })
  }
  
- 
- 
  function getRandomId(callback) {
     setTimeout(() => {
         var random = Math.round(Math.random()*10000)

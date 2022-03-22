@@ -3,18 +3,26 @@ const app = express();
 const Dialer = require('dialer').Dialer;
 const cors = require('cors');
 const bodyParser = require('body-parser')
+const { Server } = require('socket.io');
+
 let bridge = null;
 const config = {
    url: 'https://uni-call.fcc-online.pl',
-   login: 'focus16',
-   password: 'njhipjwr4kf'
+   login: '',
+   password: ''
 };
 
 Dialer.configure(config);  
 
-app.listen(3000, () => {
+const server = app.listen(3000, () => {
    console.log('app listening on port 3000');
 });
+const io = new Server(server) 
+io.on("connection", (socket) => { // nasłuchujemy na rozpoczęcie połączenia
+   console.log('Połączono socket');
+   io.emit("status", 5555);
+ });
+
 app.use(cors());
 app.use(bodyParser());
 app.get('/call/:number1/:number2', async (req, res) => {
@@ -33,10 +41,24 @@ app.get('/call/:number1/:number2', async (req, res) => {
     res.json({success: true, status: status});
   });
   
-  app.post('/call/', (req, res) => {
-   const {number} = req.body;
-   console.log('body',body);
-   bridge = Dialer.call(number1, number2);
+  app.post('/call/', async (req, res) => {
+   const body = req.body;
+   const number1 = body.number;
+   const number2 = '792751705';
+   bridge = await Dialer.call(number1, number2);
+
+   let oldStatus = null
+   let interval = setInterval(async () => {
+      let currentStatus = await bridge.getStatus();
+      if (currentStatus !== oldStatus) {
+         oldStatus = currentStatus
+         io.emit('status', currentStatus)
+      }
+      if (currentStatus === 'ANSWERED') {
+         clearInterval(interval)
+      }
+   }, 1000)
+
    res.json({ success: true });
   })
   
