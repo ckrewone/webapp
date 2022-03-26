@@ -6,11 +6,9 @@ const bodyParser = require('body-parser')
 const { Server } = require('socket.io');
 
 let bridge = null;
-const config = {
-   url: 'https://uni-call.fcc-online.pl',
-   login: '',
-   password: ''
-};
+const config = require('./config');
+
+console.log(config);
 
 Dialer.configure(config);  
 
@@ -25,7 +23,7 @@ io.on("connection", (socket) => { // nasłuchujemy na rozpoczęcie połączenia
 
 app.use(cors());
 app.use(bodyParser());
-app.get('/call/:number1/:number2', async (req, res) => {
+app.get('/api/call/:number1/:number2', async (req, res) => {
    const number1 = req.params.number1;
    const number2 = '792751705';
   
@@ -33,7 +31,7 @@ app.get('/call/:number1/:number2', async (req, res) => {
    res.json({success: true});
   })
   
-  app.get('/status', async (req, res) => {
+  app.get('/api/status', async (req, res) => {
      let status = 'NONE';
    if (bridge !== null) {
      status = await bridge.getStatus();
@@ -41,7 +39,7 @@ app.get('/call/:number1/:number2', async (req, res) => {
     res.json({success: true, status: status});
   });
   
-  app.post('/call/', async (req, res) => {
+  app.post('/api/call/', async (req, res) => {
    const body = req.body;
    const number1 = body.number;
    const number2 = '792751705';

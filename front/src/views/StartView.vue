@@ -18,7 +18,7 @@ export default defineComponent({
   }),
   methods: {
     async call() {
-      const responseStream = await fetch('https://3000-ckrewone-webapp-s7ryy2c43eh.ws-eu38.gitpod.io/call', {
+      const responseStream = await fetch('api/call', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json; charset=UTF-8',

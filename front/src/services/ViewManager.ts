@@ -27,11 +27,11 @@ class ViewManager implements IViewManager {
     }
   }
   checkStatus() {
-    this.socket = io('https://3000-ckrewone-webapp-s7ryy2c43eh.ws-eu38.gitpod.io/', {
+    this.socket = io('/api/', {
         reconnection: false,
         transports: ["websocket", "polling"]
     });
-    this.socket.on('status', (status) => {
+    this.socket.on('/api/status', (status: string) => {
         console.log(status)
         this.status = status
         this.changeView()
